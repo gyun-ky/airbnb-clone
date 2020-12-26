@@ -1,4 +1,5 @@
 
-urlpatterns = path{
+
+urlpatterns = [
     
-}
+]
