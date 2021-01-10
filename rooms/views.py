@@ -74,7 +74,7 @@ def search(request):
         "s_amenities" : s_amenities,
         "s_facilities" : s_facilities,
         "instant" : instant,
-        "superhost": super_host,
+        "super_host": superhost,
     }
 
     
@@ -120,16 +120,18 @@ def search(request):
     
     if superhost is True:
         filter_arg["host__superhost"] = True
+    
+
+    if len(s_amenities)>0:
+        for s_amenity in s_amenities :
+            filter_arg["amenities__pk"] = int(s_amenity)
+    
+    if len(s_facilities)>0:
+        for s_facility in s_facilities :
+            filter_arg["facilities__pk"] = int(s_facility)
+
     rooms = models.Room.objects.filter(**filter_arg)
     results = {
         "rooms" : rooms,
     }
-
-    if len(s_amenities)>0:
-        for s_amenity in s_amenities :
-            filter_args["amenities__pk"] = int(s_amenity)
-    
-    if len(s_facilities)>0:
-        for s_facility in s_facilities :
-            filter_args["facilities__pk"] = int(s_facility)
     return render(request,  "rooms/search.html", {**form, **choices, **results})
