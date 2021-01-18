@@ -34,6 +34,11 @@ class User(AbstractUser):
         (CURRENCY_KRW, "KRW"),
     )
 
+    LOGIN_EMAIL = "emial"
+    LOGIN_GH = "github"
+
+    LOGIN_CHOICES = ((LOGIN_EMAIL, "Email"), (LOGIN_GH, "Github"))
+
     avatar = models.ImageField(upload_to = "avatars", blank=True, null=True)
     gender = models.CharField(choices=GENDER_CHOICES, max_length=10, blank=True)
     bio = models.TextField(blank=True)
@@ -41,6 +46,10 @@ class User(AbstractUser):
     language = models.CharField(choices=LANGUAGE_CHOICES, max_length=2, blank=True, default=LANGUAGE_KOREAN)
     currency = models.CharField(choices=CURRENCY_CHOICES, max_length=3, blank=True, default=CURRENCY_KRW)
     superhost = models.BooleanField(default=False)
+    email_verified = models.BooleanField(default=False)
+    login_method = models.CharField(max_length=50, choices=LOGIN_CHOICES, default=LOGIN_EMAIL)
 
     def __str__(self):
         return self.username
+
+
